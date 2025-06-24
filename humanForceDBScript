@@ -1,0 +1,2691 @@
+USE [HumanForce]
+GO
+/****** Object:  User [HumanForce]    Script Date: 24/06/2025 11:32:08 AM ******/
+CREATE USER [HumanForce] FOR LOGIN [HumanForce] WITH DEFAULT_SCHEMA=[dbo]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [HumanForce]
+GO
+/****** Object:  Schema [HangFire]    Script Date: 24/06/2025 11:32:08 AM ******/
+CREATE SCHEMA [HangFire]
+GO
+/****** Object:  Table [dbo].[Area]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Area](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Area] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Department]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Department](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](20) NULL,
+ CONSTRAINT [PK_Department] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Employee]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Employee](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[EmployeeCode] [nvarchar](50) NULL,
+	[Name] [nvarchar](50) NULL,
+	[PayrollCode] [nvarchar](100) NULL,
+	[PayCompany] [uniqueidentifier] NULL,
+	[EmploymentType] [uniqueidentifier] NULL,
+	[Title] [uniqueidentifier] NULL,
+	[FirstName] [nvarchar](30) NULL,
+	[LastName] [nvarchar](30) NULL,
+	[MiddleName] [nvarchar](30) NULL,
+	[ShortName] [nvarchar](15) NULL,
+	[DateOfBirth] [datetime] NULL,
+	[Email] [nvarchar](128) NULL,
+	[Mobile] [nvarchar](20) NULL,
+	[StartDate] [datetime] NULL,
+	[TerminationDate] [datetime] NULL,
+	[DefaultLocation] [uniqueidentifier] NULL,
+	[DefaultDepartment] [uniqueidentifier] NULL,
+	[DefaultRole] [uniqueidentifier] NULL,
+	[DefaultArea] [uniqueidentifier] NULL,
+	[DefaultAwardProfile] [uniqueidentifier] NULL,
+	[DefaultPayRate] [uniqueidentifier] NULL,
+	[DefaultHourlyRate] [float] NULL,
+	[BaseAwardProfile] [uniqueidentifier] NULL,
+	[ChargeoutRate] [float] NULL,
+	[AwardPayRate] [uniqueidentifier] NULL,
+	[Grade] [int] NULL,
+	[ProductivityUnits] [float] NULL,
+	[CreatedAt] [datetime] NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[ModifiedAt] [datetime] NULL,
+	[ModifiedBy] [uniqueidentifier] NULL,
+	[Phone] [nvarchar](20) NULL,
+	[PhoneExt] [nvarchar](50) NULL,
+	[SecondaryPhone] [nvarchar](20) NULL,
+	[SecondaryEmail] [nvarchar](128) NULL,
+	[Pager] [nvarchar](20) NULL,
+	[NetUsername] [nvarchar](50) NULL,
+	[Address_1] [nvarchar](50) NULL,
+	[Address_2] [nvarchar](50) NULL,
+	[Suburb] [nvarchar](50) NULL,
+	[State] [nvarchar](50) NULL,
+	[PostCode] [nvarchar](10) NULL,
+	[Country] [nvarchar](50) NULL,
+	[PostalAddressSameAsPrimary] [bit] NULL,
+	[Postal_Address_1] [nvarchar](50) NULL,
+	[Postal_Address_2] [nvarchar](50) NULL,
+	[Postal_Suburb] [nvarchar](50) NULL,
+	[Postal_State] [nvarchar](50) NULL,
+	[Postal_PostCode] [nvarchar](10) NULL,
+	[Postal_Country] [nvarchar](50) NULL,
+	[LoginDisabled] [bit] NULL,
+	[LeaveAccrualStartDate] [datetime] NULL,
+	[ExportPays] [bit] NULL,
+	[ProbationDays] [int] NULL,
+	[ProfileOverride] [bit] NULL,
+	[DefaultHoursOverride] [bit] NULL,
+	[DefaultPeriod] [uniqueidentifier] NULL,
+	[JobTitle] [nvarchar](50) NULL,
+	[AccessLevel] [uniqueidentifier] NULL,
+	[ClockInSetting] [uniqueidentifier] NULL,
+	[ManagementGroup] [uniqueidentifier] NULL,
+	[ShiftTypeSetting] [uniqueidentifier] NULL,
+	[Gender] [uniqueidentifier] NULL,
+	[Nationality] [uniqueidentifier] NULL,
+	[Ethnicity] [uniqueidentifier] NULL,
+	[PassportNumber] [nvarchar](20) NULL,
+	[PassportCountry] [nvarchar](50) NULL,
+	[TaxID] [nvarchar](50) NULL,
+	[VisaNumber] [nvarchar](50) NULL,
+	[VisaExpiry] [datetime] NULL,
+	[VisaType] [uniqueidentifier] NULL,
+	[BankName] [nvarchar](50) NULL,
+	[BankBSB] [nvarchar](20) NULL,
+	[BankState] [nvarchar](50) NULL,
+	[BankAccountName] [nvarchar](50) NULL,
+	[BankAccountNumber] [nvarchar](50) NULL,
+	[DisabilityType] [uniqueidentifier] NULL,
+	[LoanType] [uniqueidentifier] NULL,
+	[EmploymentSituation] [uniqueidentifier] NULL,
+	[RoleRevisionDateEffective] [datetime] NULL,
+	[PayCompanyDateEffective] [datetime] NULL,
+	[RosterMinHours] [float] NULL,
+	[RosterMinHoursDateEffective] [datetime] NULL,
+	[RosterMaxHours] [float] NULL,
+	[RosterMaxHoursDateEffective] [datetime] NULL,
+	[MinShiftGapHours] [float] NULL,
+ CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmploymentType]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmploymentType](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[LastEditBy] [uniqueidentifier] NULL,
+	[Name] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[Category] [nvarchar](20) NULL,
+ CONSTRAINT [PK_EmploymentType] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Roster]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Roster](
+	[RosterBaseGuidKey] [uniqueidentifier] NOT NULL,
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[DateActual] [datetime] NULL,
+	[StartTime] [datetime] NULL,
+	[EndTime] [datetime] NULL,
+	[Employee] [uniqueidentifier] NULL,
+	[LastEditBy] [uniqueidentifier] NULL,
+	[GrossMinutes] [int] NULL,
+	[TimeOfBreak] [datetime] NULL,
+	[BreakMinutes] [int] NULL,
+	[NetMinutes] [int] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Department] [uniqueidentifier] NULL,
+	[Role] [uniqueidentifier] NULL,
+	[Period] [uniqueidentifier] NULL,
+	[Area] [uniqueidentifier] NULL,
+	[Event] [uniqueidentifier] NULL,
+	[EventFunction] [uniqueidentifier] NULL,
+	[ShiftType] [uniqueidentifier] NULL,
+	[ShiftDefinition] [uniqueidentifier] NULL,
+	[Cost] [float] NULL,
+	[Confirmed] [int] NULL,
+	[Changed] [bit] NULL,
+	[NonAttended] [bit] NULL,
+	[Published] [bit] NULL,
+	[PublishedBy] [uniqueidentifier] NULL,
+	[PublishedAt] [datetime] NULL,
+	[ReadOnly] [bit] NULL,
+	[ReadOnlySetBy] [uniqueidentifier] NULL,
+	[ReadOnlySetAt] [datetime] NULL,
+	[RosterData1] [uniqueidentifier] NULL,
+	[RosterData2] [uniqueidentifier] NULL,
+	[RosterData3] [uniqueidentifier] NULL,
+	[Deleted] [bit] NULL,
+ CONSTRAINT [PK_Roster] PRIMARY KEY CLUSTERED 
+(
+	[RosterBaseGuidKey] ASC,
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Gender]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Gender](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Gender] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Location]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Location](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](100) NULL,
+	[LocationCode] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[LocationType] [uniqueidentifier] NULL,
+	[LocationGroup] [uniqueidentifier] NULL,
+	[Region] [uniqueidentifier] NULL,
+	[IsHeadOffice] [bit] NULL,
+	[Address1] [nvarchar](20) NULL,
+	[Address2] [nvarchar](20) NULL,
+	[Address3] [nvarchar](20) NULL,
+	[Suburb] [nvarchar](20) NULL,
+	[State] [nvarchar](50) NULL,
+	[Postcode] [nvarchar](6) NULL,
+	[Country] [nvarchar](50) NULL,
+	[Phone] [nvarchar](20) NULL,
+	[Fax] [nvarchar](20) NULL,
+	[Modem] [nvarchar](20) NULL,
+	[IsShop] [bit] NULL,
+	[IsOffice] [bit] NULL,
+	[PreAuth] [int] NULL,
+	[EnforceMaxEmpNo] [bit] NULL,
+	[MaxEmpNo] [int] NULL,
+	[ExcludeEmpOnBreak] [bit] NULL,
+	[Latitude] [float] NULL,
+	[Longitude] [float] NULL,
+	[OverrideRosterStart] [bit] NULL,
+	[RosterStartDOW] [int] NULL,
+	[EmployeeCodePrefix] [nvarchar](50) NULL,
+	[GeofenceRadius] [int] NULL,
+ CONSTRAINT [PK_Location] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayCompany]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayCompany](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[ShortName] [nvarchar](max) NULL,
+	[ExportCode] [nvarchar](max) NULL,
+	[PayPackage] [nvarchar](max) NULL,
+	[DefaultPayPeriod] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_PayCompany] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayRate]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayRate](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](50) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[Rate] [float] NULL,
+	[EffectiveDate] [datetime] NULL,
+	[ChargeOutRate] [float] NULL,
+ CONSTRAINT [PK_PayRate] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Role]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Role](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](60) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ColorCode] [nvarchar](max) NULL,
+	[Rate] [float] NULL,
+	[DefaultRateCalcMethod] [nvarchar](10) NULL,
+	[DefaultGradeMin] [int] NULL,
+	[DefaultGradeMax] [int] NULL,
+	[MinAge] [int] NULL,
+	[EventManager] [bit] NULL,
+	[DefaultStartTime] [datetime] NULL,
+	[DefaultEndTime] [datetime] NULL,
+	[NonAttend] [bit] NULL,
+	[HideRosterEndTime] [bit] NULL,
+	[PayRate] [uniqueidentifier] NULL,
+	[DefaultProfile] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ShiftType]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ShiftType](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[IsNormalType] [bit] NULL,
+	[IsUnPaid] [bit] NULL,
+	[IsAttendedType] [bit] NULL,
+	[IsLeaveType] [bit] NULL,
+	[IsRequestable] [bit] NULL,
+	[IsUnplannedLeave] [bit] NULL,
+	[IsAccrualType] [bit] NULL,
+	[IsAccruedInternally] [bit] NULL,
+ CONSTRAINT [PK_ShiftType] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Timesheet]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Timesheet](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[LastEditBy] [uniqueidentifier] NULL,
+	[Employee] [uniqueidentifier] NULL,
+	[DateStart] [datetime] NULL,
+	[PayDate] [datetime] NULL,
+	[PayStartTime] [datetime] NULL,
+	[PayEndTime] [datetime] NULL,
+	[ClockedStartTime] [datetime] NULL,
+	[ClockedEndTime] [datetime] NULL,
+	[GrossMinutes] [int] NULL,
+	[NetMinutes] [int] NULL,
+	[BreakMinutesUnpaid] [int] NULL,
+	[BreakMinutesPaid] [int] NULL,
+	[RosterStartTime] [datetime] NULL,
+	[RosterEndTime] [datetime] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Department] [uniqueidentifier] NULL,
+	[Role] [uniqueidentifier] NULL,
+	[Period] [uniqueidentifier] NULL,
+	[Area] [uniqueidentifier] NULL,
+	[Event] [uniqueidentifier] NULL,
+	[EventFunction] [uniqueidentifier] NULL,
+	[ShiftType] [uniqueidentifier] NULL,
+	[Cost] [float] NULL,
+	[Authorised] [bit] NULL,
+	[AuthorisedBy] [uniqueidentifier] NULL,
+	[AuthorisedAt] [datetime] NULL,
+	[Paid] [bit] NULL,
+	[Started] [bit] NULL,
+	[Ended] [bit] NULL,
+	[AdminLock] [bit] NULL,
+	[Reversal] [bit] NULL,
+	[Comments] [nvarchar](max) NULL,
+	[Deleted] [bit] NULL,
+	[RosterGuidKey] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_Timesheet] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  View [dbo].[TimesheetData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[TimesheetData]
+AS
+SELECT DISTINCT 
+	Timesheet.GuidKey AS TimesheetGuidKey,
+	Timesheet.DateStart, 
+	Employee.GuidKey AS EmployeeGuidKey,
+	Employee.EmployeeCode, 
+	Employee.Name AS EmployeeName, 
+	Employee.FirstName, 
+	Employee.LastName, 
+	Employee.DateOfBirth, 
+	Gender.GuidKey AS GenderGuidKey,
+	Gender.ShortName AS Gender, 
+	Employee.StartDate, 
+	Employee.TerminationDate, 
+	Role.GuidKey AS RoleGuidKey,
+	Role.Name AS RoleName, 
+	Department.GuidKey AS DepartmentGuidKey,
+	Department.Name AS DepartmentName, 
+	Location.GuidKey AS LocationGuidKey,
+	Location.Name AS LocationName, 
+	Area.GuidKey AS AreaGuidKey,
+	Area.Name AS AreaName, 
+	Employee.PayrollCode, 
+	EmploymentType.GuidKey AS EmploymentTypeGuidKey,
+	EmploymentType.Name AS EmploymentTypeName, 
+	PayRate.GuidKey AS PayRateGuidKey,
+	PayRate.Name AS PyRateName, 
+	PayCompany.GuidKey AS PayCompanyGuidKey,
+	PayCompany.Name AS PayCompanyName, 
+	Employee.DefaultHourlyRate, 
+	PayRate.Rate, 
+	ShiftType.GuidKey AS ShiftTypeGuidKey,
+	ShiftType.Name AS ShiftTypeName, 
+	ShiftType.IsNormalType, 
+	ShiftType.IsUnPaid, 
+	ShiftType.IsAttendedType, 
+	ShiftType.IsLeaveType, 
+	ShiftType.IsUnplannedLeave, 
+	Roster.GuidKey AS RosterGuidKey,
+	Roster.GuidKey AS RosterKey, 
+	Timesheet.RosterStartTime, 
+	Timesheet.RosterEndTime, 
+	Roster.GrossMinutes AS RosterGrossMinutes, 
+	Roster.BreakMinutes AS RosterBreakMinutes, 
+	Roster.NetMinutes AS RosterNetMinutes, 
+	Roster.Cost AS RosterCost, 
+	Timesheet.ClockedStartTime, 
+	Timesheet.ClockedEndTime, 
+	Timesheet.GrossMinutes AS TimsheetGrossMinutes, 
+	Timesheet.BreakMinutesUnpaid AS TimesheetBreakMinutesUnpaid, 
+	Timesheet.BreakMinutesPaid AS TimesheetBreakMinutesPaid, 
+	Timesheet.NetMinutes AS TimesheetNetMinutes, 
+	Timesheet.Cost AS TimesheetCost, 
+	Timesheet.Authorised, 
+	Timesheet.Paid, 
+	Timesheet.PayStartTime, 
+	Timesheet.PayEndTime
+FROM Timesheet
+	LEFT JOIN Roster ON (Timesheet.RosterGuidKey = Roster.GuidKey)
+	LEFT JOIN Employee ON (Timesheet.Employee = Employee.GuidKey)
+	LEFT JOIN ShiftType ON (Timesheet.ShiftType = ShiftType.GuidKey)
+	LEFT JOIN Role ON (Employee.DefaultRole = Role.GuidKey)
+	LEFT JOIN Area ON (Timesheet.Area = Area.GuidKey)
+	LEFT JOIN Location ON (Timesheet.Location = Location.GuidKey)
+	LEFT JOIN Department ON (Employee.DefaultDepartment = Department.GuidKey)
+	LEFT JOIN PayRate ON (Employee.DefaultPayRate = PayRate.GuidKey)
+	LEFT JOIN EmploymentType ON (Employee.EmploymentType = EmploymentType.GuidKey)
+	LEFT JOIN PayCompany ON (Employee.PayCompany = PayCompany.GuidKey)
+	LEFT JOIN Gender ON (Employee.Gender = Gender.GuidKey);
+GO
+/****** Object:  View [dbo].[RosterData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[RosterData]
+AS
+SELECT DISTINCT 
+	Roster.GuidKey AS RosterGuidKey,
+	Roster.GuidKey AS RosterKey, 
+	Timesheet.GuidKey AS TimesheetGuidKey,
+	Timesheet.DateStart, 
+	Employee.GuidKey AS EmployeeGuidKey,
+	Employee.EmployeeCode, 
+	Employee.Name AS EmployeeName, 
+	Employee.FirstName, 
+	Employee.LastName, 
+	Employee.DateOfBirth, 
+	Gender.GuidKey AS GenderGuidKey,
+	Gender.ShortName AS Gender, 
+	Employee.StartDate, 
+	Employee.TerminationDate, 
+	Role.GuidKey AS RoleGuidKey,
+	Role.Name AS RoleName, 
+	Department.GuidKey AS DepartmentGuidKey,
+	Department.Name AS DepartmentName, 
+	Location.GuidKey AS LocationGuidKey,
+	Location.Name AS LocationName, 
+	Area.GuidKey AS AreaGuidKey,
+	Area.Name AS AreaName, 
+	Employee.PayrollCode, 
+	EmploymentType.GuidKey AS EmploymentTypeGuidKey,
+	EmploymentType.Name AS EmploymentTypeName, 
+	PayRate.GuidKey AS PayRateGuidKey,
+	PayRate.Name AS PyRateName, 
+	PayCompany.GuidKey AS PayCompanyGuidKey,
+	PayCompany.Name AS PayCompanyName, 
+	Employee.DefaultHourlyRate, 
+	PayRate.Rate, 
+	ShiftType.GuidKey AS ShiftTypeGuidKey,
+	ShiftType.Name AS ShiftTypeName, 
+	ShiftType.IsNormalType, 
+	ShiftType.IsUnPaid, 
+	ShiftType.IsAttendedType, 
+	ShiftType.IsLeaveType, 
+	ShiftType.IsUnplannedLeave, 
+	Timesheet.RosterStartTime, 
+	Timesheet.RosterEndTime, 
+	Roster.GrossMinutes AS RosterGrossMinutes, 
+	Roster.BreakMinutes AS RosterBreakMinutes, 
+	Roster.NetMinutes AS RosterNetMinutes, 
+	Roster.Cost AS RosterCost, 
+	Timesheet.ClockedStartTime, 
+	Timesheet.ClockedEndTime, 
+	Timesheet.GrossMinutes AS TimsheetGrossMinutes, 
+	Timesheet.BreakMinutesUnpaid AS TimesheetBreakMinutesUnpaid, 
+	Timesheet.BreakMinutesPaid AS TimesheetBreakMinutesPaid, 
+	Timesheet.NetMinutes AS TimesheetNetMinutes, 
+	Timesheet.Cost AS TimesheetCost, 
+	Timesheet.Authorised, 
+	Timesheet.Paid, 
+	Timesheet.PayStartTime, 
+	Timesheet.PayEndTime
+FROM Roster
+	LEFT JOIN Employee ON (Roster.Employee = Employee.GuidKey)
+	LEFT JOIN ShiftType ON (Roster.ShiftType = ShiftType.GuidKey)
+	LEFT JOIN Role ON (Employee.DefaultRole = Role.GuidKey)
+	LEFT JOIN Area ON (Roster.Area = Area.GuidKey)
+	LEFT JOIN Location ON (Roster.Location = Location.GuidKey)
+	LEFT JOIN Department ON (Employee.DefaultDepartment = Department.GuidKey)
+	LEFT JOIN PayRate ON (Employee.DefaultPayRate = PayRate.GuidKey)
+	LEFT JOIN EmploymentType ON (Employee.EmploymentType = EmploymentType.GuidKey)
+	LEFT JOIN PayCompany ON (Employee.PayCompany = PayCompany.GuidKey)
+	LEFT JOIN Gender ON (Employee.Gender = Gender.GuidKey)
+	LEFT JOIN Timesheet ON (Timesheet.RosterGuidKey = Roster.GuidKey)
+GO
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[__EFMigrationsHistory](
+	[MigrationId] [nvarchar](150) NOT NULL,
+	[ProductVersion] [nvarchar](32) NOT NULL,
+ CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AccessLevel]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AccessLevel](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](max) NULL,
+	[AuthLevel] [int] NULL,
+	[ElapsedPeriodGraceDays] [int] NULL,
+	[TimesheetLengthWarningHours] [float] NULL,
+	[AvailabilityChangeMinDaysNotice] [int] NULL,
+	[LeaveChangeMinDaysEnabled] [bit] NULL,
+	[LeaveChangeMinDaysNotice] [int] NULL,
+	[RosterDaysForward] [int] NULL,
+	[TimesheetDaysBackwards] [int] NULL,
+	[DaysForLeavePayInAdvance] [int] NULL,
+	[EventDaysBackwordForward] [int] NULL,
+	[PasswordSetting] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_AccessLevel] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AccessLevelRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AccessLevelRequestData](
+	[Name] [nvarchar](50) NULL,
+	[AuthLevel] [int] NULL,
+	[PasswordSettingGuidKey] [uniqueidentifier] NULL,
+	[ElapsedPeriodGraceDays] [int] NULL,
+	[TimesheetLengthWarningHours] [float] NULL,
+	[AvailabilityChangeMinDaysNotice] [int] NULL,
+	[LeaveChangeMinDaysEnabled] [bit] NULL,
+	[LeaveChangeMinDaysNotice] [int] NULL,
+	[RosterDaysForward] [int] NULL,
+	[TimesheetDaysBackwards] [int] NULL,
+	[DaysForLeavePayInAdvance] [int] NULL,
+	[EventDaysBackwordForward] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AccessPermission]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AccessPermission](
+	[PermissionName] [nvarchar](max) NULL,
+	[PermissionValue] [bit] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AccessPermissionRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AccessPermissionRequestData](
+	[PermissionName] [nvarchar](100) NULL,
+	[PermissionValue] [bit] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ActiveTimesheet]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ActiveTimesheet](
+	[TimesheetGuidKey] [uniqueidentifier] NOT NULL,
+	[StartTime] [datetime] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Department] [uniqueidentifier] NULL,
+	[Role] [uniqueidentifier] NULL,
+	[Area] [uniqueidentifier] NULL,
+	[Event] [uniqueidentifier] NULL,
+	[EventFunction] [uniqueidentifier] NULL,
+	[RosterItem] [uniqueidentifier] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ActiveTimesheetBreak]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ActiveTimesheetBreak](
+	[StartTime] [datetime] NULL,
+	[EndTime] [datetime] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ActiveTimesheetRosterItem]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ActiveTimesheetRosterItem](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[StartTime] [datetime] NULL,
+	[EndTime] [datetime] NULL,
+ CONSTRAINT [PK_ActiveTimesheetRosterItem] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[APIControl]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[APIControl](
+	[TableName] [nvarchar](30) NOT NULL,
+	[LastDownloaded] [datetime] NULL,
+ CONSTRAINT [PK_APIControl] PRIMARY KEY CLUSTERED 
+(
+	[TableName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AreaRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AreaRequestData](
+	[Name] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetRoleClaims]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetRoleClaims](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[RoleId] [nvarchar](450) NOT NULL,
+	[ClaimType] [nvarchar](max) NULL,
+	[ClaimValue] [nvarchar](max) NULL,
+ CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetRoles](
+	[Id] [nvarchar](450) NOT NULL,
+	[Name] [nvarchar](256) NULL,
+	[NormalizedName] [nvarchar](256) NULL,
+	[ConcurrencyStamp] [nvarchar](max) NULL,
+ CONSTRAINT [PK_AspNetRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserClaims](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [nvarchar](450) NOT NULL,
+	[ClaimType] [nvarchar](max) NULL,
+	[ClaimValue] [nvarchar](max) NULL,
+ CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserLogins](
+	[LoginProvider] [nvarchar](128) NOT NULL,
+	[ProviderKey] [nvarchar](128) NOT NULL,
+	[ProviderDisplayName] [nvarchar](max) NULL,
+	[UserId] [nvarchar](450) NOT NULL,
+ CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY CLUSTERED 
+(
+	[LoginProvider] ASC,
+	[ProviderKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserRoles](
+	[UserId] [nvarchar](450) NOT NULL,
+	[RoleId] [nvarchar](450) NOT NULL,
+ CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC,
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUsers](
+	[Id] [nvarchar](450) NOT NULL,
+	[UserName] [nvarchar](256) NULL,
+	[NormalizedUserName] [nvarchar](256) NULL,
+	[Email] [nvarchar](256) NULL,
+	[NormalizedEmail] [nvarchar](256) NULL,
+	[EmailConfirmed] [bit] NOT NULL,
+	[PasswordHash] [nvarchar](max) NULL,
+	[SecurityStamp] [nvarchar](max) NULL,
+	[ConcurrencyStamp] [nvarchar](max) NULL,
+	[PhoneNumber] [nvarchar](max) NULL,
+	[PhoneNumberConfirmed] [bit] NOT NULL,
+	[TwoFactorEnabled] [bit] NOT NULL,
+	[LockoutEnd] [datetimeoffset](7) NULL,
+	[LockoutEnabled] [bit] NOT NULL,
+	[AccessFailedCount] [int] NOT NULL,
+ CONSTRAINT [PK_AspNetUsers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserTokens]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserTokens](
+	[UserId] [nvarchar](450) NOT NULL,
+	[LoginProvider] [nvarchar](128) NOT NULL,
+	[Name] [nvarchar](128) NOT NULL,
+	[Value] [nvarchar](max) NULL,
+ CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC,
+	[LoginProvider] ASC,
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AvailabilityRequest]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AvailabilityRequest](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Employee] [uniqueidentifier] NULL,
+	[IsRecurring] [bit] NULL,
+	[Type] [nvarchar](20) NULL,
+	[DateTimeStart] [datetime] NULL,
+	[DateTimeEnd] [datetime] NULL,
+	[IsRequest] [bit] NULL,
+	[IsActive] [bit] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Comments] [nvarchar](max) NULL,
+ CONSTRAINT [PK_AvailabilityRequest] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AvailabilityRequestRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AvailabilityRequestRequestData](
+	[DateMin] [datetime] NULL,
+	[DateMax] [datetime] NULL,
+	[Reoccurring] [bit] NULL,
+	[Type] [nvarchar](20) NULL,
+	[LastEdit] [datetime] NULL,
+	[EmployeeGuidKey] [uniqueidentifier] NULL,
+	[EmployeeCode] [nvarchar](max) NULL,
+	[EmployeePayrollCode] [nvarchar](max) NULL,
+	[LocationGuidKey] [nvarchar](max) NULL,
+	[LocationCode] [nvarchar](max) NULL,
+	[LocationExportCode] [nvarchar](max) NULL,
+	[DepartmentGuidKey] [nvarchar](max) NULL,
+	[DepartmentExportCode] [nvarchar](max) NULL,
+	[PayCompanyGuidKey] [nvarchar](max) NULL,
+	[PayCompanyExportCode] [nvarchar](max) NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ClockInEmployee]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ClockInEmployee](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[EmployeeCode] [nvarchar](50) NULL,
+	[PayrollCode] [nvarchar](100) NULL,
+ CONSTRAINT [PK_ClockInEmployee] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ClockingStatus]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ClockingStatus](
+	[Status] [nvarchar](max) NULL,
+	[NextShift] [uniqueidentifier] NULL,
+	[ActiveTimesheet] [uniqueidentifier] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ClockingStatusRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ClockingStatusRequestData](
+	[EmployeeGuidKey] [uniqueidentifier] NOT NULL,
+	[EventTimeUtc] [datetime] NULL,
+	[TimezoneOffset] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ClockInRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ClockInRequestData](
+	[Employee] [uniqueidentifier] NOT NULL,
+	[ClockInTimeUtc] [datetime] NULL,
+	[TimezoneOffset] [int] NULL,
+	[RosterItemGuidKey] [uniqueidentifier] NULL,
+	[RosterStartTime] [datetime] NULL,
+	[RosterEndTime] [datetime] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Department] [uniqueidentifier] NULL,
+	[Role] [uniqueidentifier] NULL,
+	[Area] [uniqueidentifier] NULL,
+	[Event] [uniqueidentifier] NULL,
+	[EventFunction] [uniqueidentifier] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ClockOutRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ClockOutRequestData](
+	[Employee] [uniqueidentifier] NOT NULL,
+	[ClockOutTimeUtc] [datetime] NULL,
+	[TimezoneOffset] [int] NULL,
+	[TimesheetGuidKey] [uniqueidentifier] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DepartmentRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DepartmentRequestData](
+	[Name] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeBasic]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeBasic](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[EmployeeCode] [nvarchar](50) NULL,
+	[Name] [nvarchar](50) NULL,
+	[PayrollCode] [nvarchar](100) NULL,
+	[PayCompany] [uniqueidentifier] NULL,
+	[EmploymentType] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_EmployeeBasic] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeContact]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeContact](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[Relationship] [nvarchar](max) NULL,
+	[CompanyName] [nvarchar](max) NULL,
+	[Street1] [nvarchar](max) NULL,
+	[Street2] [nvarchar](max) NULL,
+	[Suburb] [nvarchar](max) NULL,
+	[State] [nvarchar](max) NULL,
+	[Country] [nvarchar](max) NULL,
+	[PostCode] [nvarchar](max) NULL,
+	[Email] [nvarchar](max) NULL,
+	[Mobile] [nvarchar](max) NULL,
+	[Phone] [nvarchar](max) NULL,
+	[WorkPhone] [nvarchar](max) NULL,
+	[IsEmergency] [bit] NULL,
+	[IsPrimary] [bit] NULL,
+	[ContactType] [nvarchar](max) NULL,
+ CONSTRAINT [PK_EmployeeContact] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeContactRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeContactRequestData](
+	[Name] [nvarchar](max) NULL,
+	[Relationship] [nvarchar](max) NULL,
+	[CompanyName] [nvarchar](max) NULL,
+	[Street1] [nvarchar](max) NULL,
+	[Street2] [nvarchar](max) NULL,
+	[Suburb] [nvarchar](max) NULL,
+	[State] [nvarchar](max) NULL,
+	[Country] [nvarchar](max) NULL,
+	[PostCode] [nvarchar](max) NULL,
+	[Email] [nvarchar](max) NULL,
+	[Mobile] [nvarchar](max) NULL,
+	[Phone] [nvarchar](max) NULL,
+	[WorkPhone] [nvarchar](max) NULL,
+	[IsEmergency] [bit] NULL,
+	[IsPrimary] [bit] NULL,
+	[ContactType] [nvarchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeLeaveBalance]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeLeaveBalance](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[ShiftType] [uniqueidentifier] NOT NULL,
+	[ShiftTypeGroup] [uniqueidentifier] NULL,
+	[AccruedHrs] [float] NULL,
+	[TakenHrs] [float] NULL,
+	[ToBeTakenHrs] [float] NULL,
+	[RequestedHrs] [float] NULL,
+	[AvailableHrs] [float] NULL,
+	[GroupAvailableHrs] [float] NULL,
+	[ProjectedHrs] [float] NULL,
+ CONSTRAINT [PK_EmployeeLeaveBalance] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC,
+	[ShiftType] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeLeaveBalanceRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeLeaveBalanceRequestData](
+	[ShiftType] [uniqueidentifier] NOT NULL,
+	[Hours] [float] NULL,
+	[Type] [nvarchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeOnboarding]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeOnboarding](
+	[GuidKey] [uniqueidentifier] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeOnboardingRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeOnboardingRequestData](
+	[FirstName] [nvarchar](max) NULL,
+	[LastName] [nvarchar](max) NULL,
+	[Email] [nvarchar](max) NULL,
+	[StartDate] [datetime] NULL,
+	[DateOfBirth] [datetime] NULL,
+	[Address_1] [nvarchar](max) NULL,
+	[Suburb] [nvarchar](max) NULL,
+	[State] [nvarchar](max) NULL,
+	[PostCode] [nvarchar](max) NULL,
+	[Mobile] [nvarchar](max) NULL,
+	[Country] [nvarchar](max) NULL,
+	[Gender] [uniqueidentifier] NULL,
+	[Nationality] [uniqueidentifier] NULL,
+	[DefaultLocation] [uniqueidentifier] NULL,
+	[DefaultDepartment] [uniqueidentifier] NULL,
+	[DefaultRole] [uniqueidentifier] NULL,
+	[DefaultPayRate] [uniqueidentifier] NULL,
+	[RosterMinHours] [float] NULL,
+	[TaxId] [nvarchar](max) NULL,
+	[EmploymentType] [uniqueidentifier] NULL,
+	[AccessLevel] [uniqueidentifier] NULL,
+	[ClockInSetting] [uniqueidentifier] NULL,
+	[PayCompany] [uniqueidentifier] NULL,
+	[DefaultAwardProfile] [uniqueidentifier] NULL,
+	[PassportNumber] [nvarchar](max) NULL,
+	[PassportCountry] [nvarchar](max) NULL,
+	[VisaType] [uniqueidentifier] NULL,
+	[VisaNumber] [nvarchar](max) NULL,
+	[VisaExpiry] [datetime] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeQualification]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeQualification](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[QualificationType] [uniqueidentifier] NULL,
+	[DateRequested] [datetime] NULL,
+	[DateIssued] [datetime] NULL,
+	[DateExpire] [datetime] NULL,
+	[CertificateNumber] [nvarchar](max) NULL,
+	[Comments] [nvarchar](max) NULL,
+	[StatusNote] [nvarchar](max) NULL,
+ CONSTRAINT [PK_EmployeeQualification] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeQualificationRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeQualificationRequestData](
+	[QualificationType] [uniqueidentifier] NOT NULL,
+	[DateRequested] [datetime] NULL,
+	[DateIssued] [datetime] NULL,
+	[DateExpire] [datetime] NULL,
+	[CertificateNumber] [nvarchar](30) NULL,
+	[Comments] [nvarchar](max) NULL,
+	[StatusNote] [nvarchar](200) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeQualificationsRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeQualificationsRequestData](
+	[QualificationTypeGuidKey] [uniqueidentifier] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeRequest]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeRequest](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[EmployeeCode] [nvarchar](50) NULL,
+	[PayrollCode] [nvarchar](100) NULL,
+ CONSTRAINT [PK_EmployeeRequest] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeRequestData](
+	[EmployeeCode] [nvarchar](50) NULL,
+	[Title] [uniqueidentifier] NULL,
+	[FirstName] [nvarchar](30) NULL,
+	[LastName] [nvarchar](30) NULL,
+	[MiddleName] [nvarchar](30) NULL,
+	[ShortName] [nvarchar](15) NULL,
+	[DateOfBirth] [datetime] NULL,
+	[StartDate] [datetime] NULL,
+	[TerminationDate] [datetime] NULL,
+	[PayrollCode] [nvarchar](100) NULL,
+	[PayCompany] [uniqueidentifier] NULL,
+	[PayCompanyDateEffective] [datetime] NULL,
+	[EmploymentType] [uniqueidentifier] NULL,
+	[DefaultLocation] [uniqueidentifier] NULL,
+	[DefaultDepartment] [uniqueidentifier] NULL,
+	[DefaultRole] [uniqueidentifier] NULL,
+	[DefaultArea] [uniqueidentifier] NULL,
+	[DefaultAwardProfile] [uniqueidentifier] NULL,
+	[DefaultPayRate] [uniqueidentifier] NULL,
+	[AwardPayRate] [uniqueidentifier] NULL,
+	[RoleRevisionDateEffective] [datetime] NULL,
+	[Grade] [int] NULL,
+	[ProductivityUnits] [float] NULL,
+	[DefaultHourlyRate] [float] NULL,
+	[Mobile] [nvarchar](20) NULL,
+	[Phone] [nvarchar](20) NULL,
+	[PhoneExt] [nvarchar](50) NULL,
+	[SecondaryPhone] [nvarchar](20) NULL,
+	[Email] [nvarchar](128) NULL,
+	[SecondaryEmail] [nvarchar](128) NULL,
+	[Pager] [nvarchar](20) NULL,
+	[NetUsername] [nvarchar](50) NULL,
+	[Address_1] [nvarchar](50) NULL,
+	[Address_2] [nvarchar](50) NULL,
+	[Suburb] [nvarchar](50) NULL,
+	[State] [nvarchar](50) NULL,
+	[PostCode] [nvarchar](10) NULL,
+	[Country] [nvarchar](50) NULL,
+	[PostalAddressSameAsPrimary] [bit] NULL,
+	[Postal_Address_1] [nvarchar](50) NULL,
+	[Postal_Address_2] [nvarchar](50) NULL,
+	[Postal_Suburb] [nvarchar](50) NULL,
+	[Postal_State] [nvarchar](50) NULL,
+	[Postal_PostCode] [nvarchar](10) NULL,
+	[Postal_Country] [nvarchar](50) NULL,
+	[LoginDisabled] [bit] NULL,
+	[LeaveAccrualStartDate] [datetime] NULL,
+	[ExportPays] [bit] NULL,
+	[ProbationDays] [int] NULL,
+	[ProfileOverride] [bit] NULL,
+	[DefaultHoursOverride] [bit] NULL,
+	[DefaultPeriod] [uniqueidentifier] NULL,
+	[JobTitle] [nvarchar](50) NULL,
+	[AccessLevel] [uniqueidentifier] NULL,
+	[ClockInSetting] [uniqueidentifier] NULL,
+	[ManagementGroup] [uniqueidentifier] NULL,
+	[ShiftTypeSetting] [uniqueidentifier] NULL,
+	[Gender] [uniqueidentifier] NULL,
+	[Nationality] [uniqueidentifier] NULL,
+	[Ethnicity] [uniqueidentifier] NULL,
+	[PassportNumber] [nvarchar](20) NULL,
+	[PassportCountry] [nvarchar](50) NULL,
+	[TaxID] [nvarchar](50) NULL,
+	[VisaNumber] [nvarchar](50) NULL,
+	[VisaExpiry] [datetime] NULL,
+	[VisaType] [uniqueidentifier] NULL,
+	[BankName] [nvarchar](50) NULL,
+	[BankBSB] [nvarchar](20) NULL,
+	[BankState] [nvarchar](50) NULL,
+	[BankAccountName] [nvarchar](50) NULL,
+	[BankAccountNumber] [nvarchar](50) NULL,
+	[DisabilityType] [uniqueidentifier] NULL,
+	[LoanType] [uniqueidentifier] NULL,
+	[EmploymentSituation] [uniqueidentifier] NULL,
+	[RosterMinHours] [float] NULL,
+	[RosterMinHoursDateEffective] [datetime] NULL,
+	[RosterMaxHours] [float] NULL,
+	[RosterMaxHoursDateEffective] [datetime] NULL,
+	[Reactivate] [bit] NULL,
+	[MinShiftGapHours] [float] NULL,
+	[BaseAwardProfile] [uniqueidentifier] NULL,
+	[ChargeoutRate] [float] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeRoleRevision]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeRoleRevision](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[Role] [uniqueidentifier] NULL,
+	[Profile] [uniqueidentifier] NULL,
+	[PayRate] [uniqueidentifier] NULL,
+	[Rate] [float] NULL,
+	[AwardPayRate] [uniqueidentifier] NULL,
+	[Grade] [int] NULL,
+	[ProductivityUnits] [float] NULL,
+	[DateEffective] [datetime] NULL,
+	[BaseAwardProfile] [uniqueidentifier] NULL,
+	[ChargeoutRate] [float] NULL,
+ CONSTRAINT [PK_EmployeeRoleRevision] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeRoleRevisionRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeRoleRevisionRequestData](
+	[Role] [uniqueidentifier] NOT NULL,
+	[Profile] [uniqueidentifier] NULL,
+	[PayRate] [uniqueidentifier] NULL,
+	[Rate] [float] NULL,
+	[AwardPayRate] [uniqueidentifier] NULL,
+	[Grade] [int] NULL,
+	[ProductivityUnits] [float] NULL,
+	[DateEffective] [datetime] NULL,
+	[BaseAwardProfile] [uniqueidentifier] NULL,
+	[ChargeoutRate] [float] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeSummary]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeSummary](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[EmployeeCode] [nvarchar](50) NULL,
+	[Name] [nvarchar](50) NULL,
+	[PayrollCode] [nvarchar](100) NULL,
+	[PayCompany] [uniqueidentifier] NULL,
+	[EmploymentType] [uniqueidentifier] NULL,
+	[Title] [uniqueidentifier] NULL,
+	[FirstName] [nvarchar](30) NULL,
+	[LastName] [nvarchar](30) NULL,
+	[MiddleName] [nvarchar](30) NULL,
+	[ShortName] [nvarchar](15) NULL,
+	[DateOfBirth] [datetime] NULL,
+	[Email] [nvarchar](128) NULL,
+	[Mobile] [nvarchar](20) NULL,
+	[StartDate] [datetime] NULL,
+	[TerminationDate] [datetime] NULL,
+	[DefaultLocation] [uniqueidentifier] NULL,
+	[DefaultDepartment] [uniqueidentifier] NULL,
+	[DefaultRole] [uniqueidentifier] NULL,
+	[DefaultArea] [uniqueidentifier] NULL,
+	[DefaultAwardProfile] [uniqueidentifier] NULL,
+	[DefaultPayRate] [uniqueidentifier] NULL,
+	[DefaultHourlyRate] [float] NULL,
+	[BaseAwardProfile] [uniqueidentifier] NULL,
+	[ChargeoutRate] [float] NULL,
+ CONSTRAINT [PK_EmployeeSummary] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeTitle]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeTitle](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](max) NULL,
+	[ShortName] [nvarchar](max) NULL,
+	[ExportCode] [nvarchar](max) NULL,
+ CONSTRAINT [PK_EmployeeTitle] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeTitleRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeTitleRequestData](
+	[Name] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmploymentTypeRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmploymentTypeRequestData](
+	[Name] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[Category] [nvarchar](20) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Event]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Event](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](max) NULL,
+	[ExportCode] [nvarchar](max) NULL,
+	[DateStart] [datetime] NULL,
+	[DateEnd] [datetime] NULL,
+	[TimeStart] [datetime] NULL,
+	[TimeEnd] [datetime] NULL,
+	[Place] [nvarchar](max) NULL,
+	[Comments] [nvarchar](max) NULL,
+	[Complete] [bit] NULL,
+	[ActualRevenue] [float] NULL,
+	[ForecastRevenue] [float] NULL,
+	[ShortName] [nvarchar](max) NULL,
+	[EventType] [uniqueidentifier] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Department] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_Event] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EventFunction]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EventFunction](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](max) NULL,
+	[Date] [datetime] NULL,
+	[TimeStart] [datetime] NULL,
+	[TimeEnd] [datetime] NULL,
+	[HeadCount] [int] NULL,
+	[Comments] [nvarchar](max) NULL,
+	[Place] [nvarchar](max) NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Department] [uniqueidentifier] NULL,
+	[Area] [uniqueidentifier] NULL,
+	[Period] [uniqueidentifier] NULL,
+	[ExportCode] [nvarchar](max) NULL,
+	[ShortName] [nvarchar](max) NULL,
+ CONSTRAINT [PK_EventFunction] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EventFunctionRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EventFunctionRequestData](
+	[Name] [nvarchar](150) NULL,
+	[Date] [datetime] NULL,
+	[TimeStart] [datetime] NULL,
+	[TimeEnd] [datetime] NULL,
+	[HeadCount] [int] NULL,
+	[Comments] [nvarchar](max) NULL,
+	[Place] [nvarchar](255) NULL,
+	[LocationGuidKey] [uniqueidentifier] NULL,
+	[DepartmentGuidKey] [uniqueidentifier] NULL,
+	[AreaGuidKey] [uniqueidentifier] NULL,
+	[PeriodGuidKey] [uniqueidentifier] NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EventRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EventRequestData](
+	[Name] [nvarchar](255) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[DateStart] [datetime] NULL,
+	[DateEnd] [datetime] NULL,
+	[TimeStart] [datetime] NULL,
+	[TimeEnd] [datetime] NULL,
+	[Place] [nvarchar](255) NULL,
+	[Comments] [nvarchar](max) NULL,
+	[Complete] [bit] NULL,
+	[ActualRevenue] [float] NULL,
+	[ForecastRevenue] [float] NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[EventTypeGuidKey] [uniqueidentifier] NULL,
+	[LocationGuidKey] [uniqueidentifier] NULL,
+	[DepartmentGuidKey] [uniqueidentifier] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EventType]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EventType](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](255) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+ CONSTRAINT [PK_EventType] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[FieldPermission]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[FieldPermission](
+	[Name] [nvarchar](max) NULL,
+	[InternalName] [nvarchar](max) NULL,
+	[Path] [nvarchar](max) NULL,
+	[View] [bit] NULL,
+	[Edit] [bit] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[FieldPermissionRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[FieldPermissionRequestData](
+	[InternalName] [nvarchar](50) NULL,
+	[View] [bit] NULL,
+	[Edit] [bit] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GenderRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GenderRequestData](
+	[Name] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GetEmployeeContactsRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GetEmployeeContactsRequestData](
+	[IsEmergency] [bit] NULL,
+	[IsPrimary] [bit] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GetEmployeeLeaveBalancesRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GetEmployeeLeaveBalancesRequestData](
+	[ShiftTypeGuidKey] [nvarchar](max) NULL,
+	[IncludeProjection] [bit] NULL,
+	[Date] [datetime] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GetEmployeeRoleRevisionsRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GetEmployeeRoleRevisionsRequestData](
+	[RoleGuidKey] [uniqueidentifier] NOT NULL,
+	[EffectiveDate] [datetime] NULL,
+	[IsDefault] [bit] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GetEmployeesRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GetEmployeesRequestData](
+	[LastEdit] [datetime] NULL,
+	[EmployeeCode] [nvarchar](max) NULL,
+	[PayrollCode] [nvarchar](max) NULL,
+	[PayCompanyGuidKey] [nvarchar](max) NULL,
+	[PayCompanyExportCode] [nvarchar](max) NULL,
+	[DefaultLocationGuidKey] [nvarchar](max) NULL,
+	[DefaultLocationCode] [nvarchar](max) NULL,
+	[DefaultLocationExportCode] [nvarchar](max) NULL,
+	[DefaultDepartmentGuidKey] [nvarchar](max) NULL,
+	[DefaultDepartmentExportCode] [nvarchar](max) NULL,
+	[DefaultRoleGuidKey] [nvarchar](max) NULL,
+	[DefaultRoleExportCode] [nvarchar](max) NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GetEventsRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GetEventsRequestData](
+	[DateMin] [datetime] NULL,
+	[DateMax] [datetime] NULL,
+	[Complete] [bit] NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GetFunctionsRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GetFunctionsRequestData](
+	[DateMin] [datetime] NULL,
+	[DateMax] [datetime] NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GetLeaveRequestsData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GetLeaveRequestsData](
+	[DateMin] [datetime] NULL,
+	[DateMax] [datetime] NULL,
+	[UsePayDate] [bit] NULL,
+	[ApprovedStatus] [bit] NULL,
+	[EmployeeGuidKey] [uniqueidentifier] NULL,
+	[EmployeeCode] [nvarchar](max) NULL,
+	[EmployeePayrollCode] [nvarchar](max) NULL,
+	[LastEdit] [datetime] NULL,
+	[PayCompanyGuidKey] [uniqueidentifier] NULL,
+	[PayCompanyExportCode] [nvarchar](max) NULL,
+	[LocationGuidKey] [uniqueidentifier] NULL,
+	[LocationCode] [nvarchar](max) NULL,
+	[LocationExportCode] [nvarchar](max) NULL,
+	[DepartmentGuidKey] [uniqueidentifier] NULL,
+	[DepartmentExportCode] [nvarchar](max) NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GetPayRatesRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GetPayRatesRequestData](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[ExportCode] [nvarchar](max) NULL,
+	[EffectiveDate] [datetime] NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GetPublicHolidaysRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GetPublicHolidaysRequestData](
+	[DateMin] [datetime] NULL,
+	[DateMax] [datetime] NULL,
+	[HolidayTypeGuidKey] [nvarchar](max) NULL,
+	[RegionGuidKey] [nvarchar](max) NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GetRosterRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GetRosterRequestData](
+	[DateMin] [datetime] NULL,
+	[DateMax] [datetime] NULL,
+	[LastEdit] [datetime] NULL,
+	[EmployeeGuidKey] [nvarchar](max) NULL,
+	[EmployeeCode] [nvarchar](max) NULL,
+	[EmployeePayrollCode] [nvarchar](max) NULL,
+	[PayCompanyGuidKey] [nvarchar](max) NULL,
+	[PayCompanyExportCode] [nvarchar](max) NULL,
+	[LocationGuidKey] [nvarchar](max) NULL,
+	[LocationCode] [nvarchar](max) NULL,
+	[LocationExportCode] [nvarchar](max) NULL,
+	[DepartmentGuidKey] [nvarchar](max) NULL,
+	[DepartmentExportCode] [nvarchar](max) NULL,
+	[RoleGuidKey] [nvarchar](max) NULL,
+	[RoleExportCode] [nvarchar](max) NULL,
+	[EventGuidKey] [nvarchar](max) NULL,
+	[EventExportCode] [nvarchar](max) NULL,
+	[EventFunctionGuidKey] [nvarchar](max) NULL,
+	[EventFunctionExportCode] [nvarchar](max) NULL,
+	[Confirmed] [int] NULL,
+	[Published] [bit] NULL,
+	[IncludeDeleted] [bit] NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GetShiftTypeRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GetShiftTypeRequestData](
+	[IsLeaveType] [bit] NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GetTimesheetRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GetTimesheetRequestData](
+	[DateMin] [datetime] NULL,
+	[DateMax] [datetime] NULL,
+	[UsePayDate] [bit] NULL,
+	[LastEdit] [datetime] NULL,
+	[EmployeeGuidKey] [nvarchar](max) NULL,
+	[EmployeeCode] [nvarchar](max) NULL,
+	[EmployeePayrollCode] [nvarchar](max) NULL,
+	[PayCompanyGuidKey] [nvarchar](max) NULL,
+	[PayCompanyExportCode] [nvarchar](max) NULL,
+	[ShiftTypeGuidKey] [nvarchar](max) NULL,
+	[ShiftTypeExportCode] [nvarchar](max) NULL,
+	[LocationGuidKey] [nvarchar](max) NULL,
+	[LocationCode] [nvarchar](max) NULL,
+	[LocationExportCode] [nvarchar](max) NULL,
+	[DepartmentGuidKey] [nvarchar](max) NULL,
+	[DepartmentExportCode] [nvarchar](max) NULL,
+	[RoleGuidKey] [nvarchar](max) NULL,
+	[RoleExportCode] [nvarchar](max) NULL,
+	[EventGuidKey] [nvarchar](max) NULL,
+	[EventExportCode] [nvarchar](max) NULL,
+	[EventFunctionGuidKey] [nvarchar](max) NULL,
+	[EventFunctionExportCode] [nvarchar](max) NULL,
+	[Authorised] [bit] NULL,
+	[Rostered] [bit] NULL,
+	[Active] [bit] NULL,
+	[IncludeDeleted] [bit] NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[LeaveRequest]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LeaveRequest](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[LastEditBy] [uniqueidentifier] NULL,
+	[Employee] [uniqueidentifier] NULL,
+	[RequestedBy] [nvarchar](max) NULL,
+	[RequestedAt] [datetime] NULL,
+	[Date] [datetime] NULL,
+	[PayDate] [datetime] NULL,
+	[TimeStart] [datetime] NULL,
+	[TimeEnd] [datetime] NULL,
+	[RequestedMinutes] [int] NULL,
+	[BreakMinutes] [int] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Department] [uniqueidentifier] NULL,
+	[Role] [uniqueidentifier] NULL,
+	[ShiftType] [uniqueidentifier] NULL,
+	[ApprovalStatus] [bit] NULL,
+	[ApprovedBy] [uniqueidentifier] NULL,
+	[ApprovedAt] [datetime] NULL,
+	[SourceType] [nvarchar](max) NULL,
+	[SourceGuidKey] [uniqueidentifier] NULL,
+	[TimesheetGuidKey] [uniqueidentifier] NULL,
+	[Deleted] [bit] NULL,
+ CONSTRAINT [PK_LeaveRequest] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[LeaveRequestRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LeaveRequestRequestData](
+	[Employee] [uniqueidentifier] NOT NULL,
+	[RequestedBy] [uniqueidentifier] NULL,
+	[RequestedAt] [datetime] NULL,
+	[Date] [datetime] NULL,
+	[PayDate] [datetime] NULL,
+	[TimeStart] [datetime] NULL,
+	[TimeEnd] [datetime] NULL,
+	[BreakMinutes] [int] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Department] [uniqueidentifier] NULL,
+	[Role] [uniqueidentifier] NULL,
+	[ShiftType] [uniqueidentifier] NULL,
+	[ApprovalStatus] [bit] NULL,
+	[ApprovedBy] [uniqueidentifier] NULL,
+	[ApprovedAt] [datetime] NULL,
+	[SourceType] [nvarchar](max) NULL,
+	[SourceGuidKey] [uniqueidentifier] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[LocationRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LocationRequestData](
+	[Name] [nvarchar](100) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[LocationCode] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[LocationType] [uniqueidentifier] NULL,
+	[LocationGroup] [uniqueidentifier] NULL,
+	[Region] [uniqueidentifier] NULL,
+	[Address1] [nvarchar](40) NULL,
+	[Address2] [nvarchar](40) NULL,
+	[Address3] [nvarchar](40) NULL,
+	[Suburb] [nvarchar](20) NULL,
+	[State] [nvarchar](50) NULL,
+	[Postcode] [nvarchar](6) NULL,
+	[Country] [nvarchar](50) NULL,
+	[Phone] [nvarchar](20) NULL,
+	[Fax] [nvarchar](20) NULL,
+	[Modem] [nvarchar](20) NULL,
+	[IsHeadOffice] [bit] NULL,
+	[IsOffice] [bit] NULL,
+	[PreAuth] [int] NULL,
+	[EnforceMaxEmpNo] [bit] NULL,
+	[MaxEmpNo] [int] NULL,
+	[ExcludeEmpOnBreak] [bit] NULL,
+	[Latitude] [float] NULL,
+	[Longitude] [float] NULL,
+	[OverrideRosterStart] [bit] NULL,
+	[RosterStartDOW] [int] NULL,
+	[EmployeeCodePrefix] [nvarchar](50) NULL,
+	[GeofenceRadius] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[LocationSummary]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LocationSummary](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](50) NULL,
+	[LocationCode] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+ CONSTRAINT [PK_LocationSummary] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[LocationType]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LocationType](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](50) NULL,
+ CONSTRAINT [PK_LocationType] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[NationalityRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NationalityRequestData](
+	[Name] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[NationalitySummary]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NationalitySummary](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](50) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+ CONSTRAINT [PK_NationalitySummary] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[NextShift]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NextShift](
+	[RosterItemGuidKey] [uniqueidentifier] NOT NULL,
+	[StartTime] [datetime] NULL,
+	[EndTime] [datetime] NULL,
+	[BreakStartTime] [datetime] NULL,
+	[BreakEndTime] [datetime] NULL,
+	[NetMinutes] [int] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Department] [uniqueidentifier] NULL,
+	[Role] [uniqueidentifier] NULL,
+	[Area] [uniqueidentifier] NULL,
+	[Event] [uniqueidentifier] NULL,
+	[EventFunction] [uniqueidentifier] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[OnboardingEmployeeStatus]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OnboardingEmployeeStatus](
+	[Status] [nvarchar](max) NULL,
+	[EmployeeGuidKey] [uniqueidentifier] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayRateRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayRateRequestData](
+	[Name] [nvarchar](60) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[Rate] [float] NULL,
+	[EffectiveDate] [datetime] NULL,
+	[ChargeoutRate] [float] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Payrun]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Payrun](
+	[PayrunGuidKey] [uniqueidentifier] NOT NULL,
+	[PayrunType] [int] NULL,
+	[PayCompany] [uniqueidentifier] NULL,
+	[StartDate] [datetime] NULL,
+	[EndDate] [datetime] NULL,
+	[PayNumber] [int] NULL,
+	[ProcessedDateTime] [datetime] NULL,
+	[ProcessedBy] [uniqueidentifier] NULL,
+	[Finalised] [bit] NULL,
+	[FinalisedDateTime] [datetime] NULL,
+	[FinalisedBy] [uniqueidentifier] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayrunPayType]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayrunPayType](
+	[Name] [nvarchar](60) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[AsUnits] [bit] NULL,
+	[Multiplier] [float] NULL,
+	[ForPayroll] [bit] NULL,
+	[PeriodLimit] [float] NULL,
+	[DailyLimit] [float] NULL,
+	[DefaultShiftType] [uniqueidentifier] NULL,
+	[SalaryExclusive] [bit] NULL,
+	[RosterWarning] [bit] NULL,
+	[AsOT] [bit] NULL,
+	[ExcludeFromAccruals] [bit] NULL,
+	[ForInternalAccrual] [bit] NULL,
+	[AdhocEnabled] [bit] NULL,
+	[AdhocAuthLevel] [int] NULL,
+	[AdhocMin] [float] NULL,
+	[AdhocMax] [float] NULL,
+	[AdhocGranularity] [float] NULL,
+	[AdhocExportAsDollars] [bit] NULL,
+	[AdhocPeriodLevel] [bit] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayrunRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayrunRequestData](
+	[DateMin] [datetime] NULL,
+	[DateMax] [datetime] NULL,
+	[PayCompanyGuidKey] [nvarchar](max) NULL,
+	[Finalised] [bit] NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayrunSummariesRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayrunSummariesRequestData](
+	[DateMin] [datetime] NULL,
+	[DateMax] [datetime] NULL,
+	[PayrunGuidKey] [nvarchar](max) NULL,
+	[PayCompanyGuidKey] [nvarchar](max) NULL,
+	[EmployeeGuidKey] [nvarchar](max) NULL,
+	[LocationGuidKey] [nvarchar](max) NULL,
+	[Finalised] [bit] NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayrunSummary]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayrunSummary](
+	[PayrunGuidKey] [uniqueidentifier] NOT NULL,
+	[PayPeriodStartDate] [datetime] NULL,
+	[PayPeriodEndDate] [datetime] NULL,
+	[PayCompany] [uniqueidentifier] NULL,
+	[Employee] [uniqueidentifier] NULL,
+	[Date] [datetime] NULL,
+	[PayrunTimesheetGuidKey] [uniqueidentifier] NULL,
+	[ShiftType] [uniqueidentifier] NULL,
+	[TimeStart] [datetime] NULL,
+	[TimeEnd] [datetime] NULL,
+	[BreakTotalMins] [int] NULL,
+	[PayDate] [datetime] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Department] [uniqueidentifier] NULL,
+	[Role] [uniqueidentifier] NULL,
+	[Area] [uniqueidentifier] NULL,
+	[Profile] [uniqueidentifier] NULL,
+	[Period] [uniqueidentifier] NULL,
+	[Event] [uniqueidentifier] NULL,
+	[Function] [uniqueidentifier] NULL,
+	[Grade] [int] NULL,
+	[Reversal] [bit] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayrunSummaryPayType]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayrunSummaryPayType](
+	[Paytype] [uniqueidentifier] NOT NULL,
+	[Value] [float] NULL,
+	[Cost] [float] NULL,
+	[PayRate] [uniqueidentifier] NULL,
+	[HourlyRate] [float] NULL,
+	[Multiplier] [float] NULL,
+	[AsUnits] [bit] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayrunTimesheet]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayrunTimesheet](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[PayrunGuidKey] [uniqueidentifier] NULL,
+	[PayPeriodStartDate] [datetime] NULL,
+	[PayPeriodEndDate] [datetime] NULL,
+	[PayCompany] [uniqueidentifier] NULL,
+	[Employee] [uniqueidentifier] NULL,
+	[Date] [datetime] NULL,
+	[ShiftType] [uniqueidentifier] NULL,
+	[TimeStart] [datetime] NULL,
+	[TimeEnd] [datetime] NULL,
+	[BreakTotalMins] [int] NULL,
+	[PayDate] [datetime] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Department] [uniqueidentifier] NULL,
+	[Role] [uniqueidentifier] NULL,
+	[Area] [uniqueidentifier] NULL,
+	[Profile] [uniqueidentifier] NULL,
+	[Period] [uniqueidentifier] NULL,
+	[Event] [uniqueidentifier] NULL,
+	[Function] [uniqueidentifier] NULL,
+	[PayRate] [uniqueidentifier] NULL,
+	[HourlyRate] [float] NULL,
+	[Grade] [int] NULL,
+	[Reversal] [bit] NULL,
+	[RealShift] [bit] NULL,
+ CONSTRAINT [PK_PayrunTimesheet] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayrunTimesheetPayType]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayrunTimesheetPayType](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[PayrunGuidKey] [uniqueidentifier] NULL,
+	[PayrunTimesheetGuidKey] [uniqueidentifier] NULL,
+	[PayPeriodStartDate] [datetime] NULL,
+	[PayPeriodEndDate] [datetime] NULL,
+	[PayCompany] [uniqueidentifier] NULL,
+	[Employee] [uniqueidentifier] NULL,
+	[Paytype] [uniqueidentifier] NULL,
+	[Value] [float] NULL,
+	[Cost] [float] NULL,
+	[PayRate] [uniqueidentifier] NULL,
+	[HourlyRate] [float] NULL,
+ CONSTRAINT [PK_PayrunTimesheetPayType] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayrunTimesheetPayTypeRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayrunTimesheetPayTypeRequestData](
+	[EmployeeGuidKey] [nvarchar](max) NULL,
+	[PayrunTimesheetGuidKey] [nvarchar](max) NULL,
+	[PaytypeGuidKey] [nvarchar](max) NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayrunTimesheetRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayrunTimesheetRequestData](
+	[DateMin] [datetime] NULL,
+	[DateMax] [datetime] NULL,
+	[EmployeeGuidKey] [nvarchar](max) NULL,
+	[LocationGuidKey] [nvarchar](max) NULL,
+	[Page] [int] NULL,
+	[PageSize] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayType]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayType](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](60) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[AsUnits] [bit] NULL,
+	[Multiplier] [float] NULL,
+	[ForPayroll] [bit] NULL,
+	[PeriodLimit] [float] NULL,
+	[DailyLimit] [float] NULL,
+	[DefaultShiftType] [uniqueidentifier] NULL,
+	[SalaryExclusive] [bit] NULL,
+	[RosterWarning] [bit] NULL,
+	[AsOT] [bit] NULL,
+	[ExcludeFromAccruals] [bit] NULL,
+	[ForInternalAccrual] [bit] NULL,
+	[AdhocEnabled] [bit] NULL,
+	[AdhocAuthLevel] [int] NULL,
+	[AdhocMin] [float] NULL,
+	[AdhocMax] [float] NULL,
+	[AdhocGranularity] [float] NULL,
+	[AdhocExportAsDollars] [bit] NULL,
+	[AdhocPeriodLevel] [bit] NULL,
+ CONSTRAINT [PK_PayType] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayTypeRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayTypeRequestData](
+	[Name] [nvarchar](60) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[AsUnits] [bit] NULL,
+	[Multiplier] [float] NULL,
+	[ForPayroll] [bit] NULL,
+	[PeriodLimit] [float] NULL,
+	[DailyLimit] [float] NULL,
+	[DefaultShiftType] [uniqueidentifier] NULL,
+	[SalaryExclusive] [bit] NULL,
+	[RosterWarning] [bit] NULL,
+	[AsOT] [bit] NULL,
+	[ExcludeFromAccruals] [bit] NULL,
+	[ForInternalAccrual] [bit] NULL,
+	[AdhocEnabled] [bit] NULL,
+	[AdhocAuthLevel] [int] NULL,
+	[AdhocMin] [float] NULL,
+	[AdhocMax] [float] NULL,
+	[AdhocGranularity] [float] NULL,
+	[AdhocExportAsDollars] [bit] NULL,
+	[AdhocPeriodLevel] [bit] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Period]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Period](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](60) NULL,
+	[TimeStart] [datetime] NULL,
+	[TimeEnd] [datetime] NULL,
+ CONSTRAINT [PK_Period] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PublicHoliday]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PublicHoliday](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[Date] [datetime] NULL,
+	[Type] [uniqueidentifier] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Region] [uniqueidentifier] NULL,
+	[Color] [nvarchar](max) NULL,
+ CONSTRAINT [PK_PublicHoliday] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PublicHolidayRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PublicHolidayRequestData](
+	[Name] [nvarchar](64) NULL,
+	[Date] [datetime] NULL,
+	[Type] [uniqueidentifier] NULL,
+	[Location] [uniqueidentifier] NULL,
+	[Region] [uniqueidentifier] NULL,
+	[Color] [nvarchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PublicHolidayType]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PublicHolidayType](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](max) NULL,
+ CONSTRAINT [PK_PublicHolidayType] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PublicHolidayTypeRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PublicHolidayTypeRequestData](
+	[Name] [nvarchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[QualificationType]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[QualificationType](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](50) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[CanExpire] [bit] NULL,
+ CONSTRAINT [PK_QualificationType] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Region]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Region](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](64) NULL,
+	[RegionCode] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Region] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[RoleRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RoleRequestData](
+	[Name] [nvarchar](50) NULL,
+	[ColorCode] [nvarchar](max) NULL,
+	[Rate] [float] NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[DefaultRateCalcMethod] [nvarchar](10) NULL,
+	[DefaultGradeMin] [int] NULL,
+	[DefaultGradeMax] [int] NULL,
+	[MinAge] [int] NULL,
+	[EventManager] [bit] NULL,
+	[DefaultStartTime] [datetime] NULL,
+	[DefaultEndTime] [datetime] NULL,
+	[NonAttend] [bit] NULL,
+	[HideRosterEndTime] [bit] NULL,
+	[PayRate] [uniqueidentifier] NULL,
+	[DefaultProfile] [uniqueidentifier] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[RolesSummary]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RolesSummary](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[Name] [nvarchar](60) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+ CONSTRAINT [PK_RolesSummary] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ShiftTypeRequestData]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ShiftTypeRequestData](
+	[Name] [nvarchar](50) NULL,
+	[ShortName] [nvarchar](20) NULL,
+	[ExportCode] [nvarchar](50) NULL,
+	[IsNormalType] [bit] NULL,
+	[IsUnPaid] [bit] NULL,
+	[IsAttendedType] [bit] NULL,
+	[IsLeaveType] [bit] NULL,
+	[IsRequestable] [bit] NULL,
+	[IsUnplannedLeave] [bit] NULL,
+	[IsAccrualType] [bit] NULL,
+	[IsAccruedInternally] [bit] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ShiftTypeSummary]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ShiftTypeSummary](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[ShortName] [nvarchar](max) NULL,
+	[ExportCode] [nvarchar](max) NULL,
+	[Unpaid] [bit] NULL,
+	[IsLeaveType] [bit] NULL,
+ CONSTRAINT [PK_ShiftTypeSummary] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SummaryEntity]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SummaryEntity](
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[ShortName] [nvarchar](max) NULL,
+	[ExportCode] [nvarchar](max) NULL,
+ CONSTRAINT [PK_SummaryEntity] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TimesheetBreak]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TimesheetBreak](
+	[TimesheetGuid] [uniqueidentifier] NOT NULL,
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[ActualStartTime] [datetime] NULL,
+	[ActualEndTime] [datetime] NULL,
+	[ActualMins] [int] NULL,
+	[AdjustedStartTime] [datetime] NULL,
+	[AdjustedEndTime] [datetime] NULL,
+	[AdjustedMins] [int] NULL,
+	[Paid] [bit] NULL,
+	[Seq] [int] NULL,
+	[Location] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_TimesheetBreak] PRIMARY KEY CLUSTERED 
+(
+	[TimesheetGuid] ASC,
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TimesheetPayTypeValue]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TimesheetPayTypeValue](
+	[TimesheetGuid] [uniqueidentifier] NOT NULL,
+	[GuidKey] [uniqueidentifier] NOT NULL,
+	[LastEdit] [datetime] NULL,
+	[PayType] [uniqueidentifier] NULL,
+	[Cost] [float] NULL,
+	[PayRate] [uniqueidentifier] NULL,
+	[HourlyRate] [float] NULL,
+ CONSTRAINT [PK_TimesheetPayTypeValue] PRIMARY KEY CLUSTERED 
+(
+	[GuidKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [HangFire].[AggregatedCounter]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [HangFire].[AggregatedCounter](
+	[Key] [nvarchar](100) NOT NULL,
+	[Value] [bigint] NOT NULL,
+	[ExpireAt] [datetime] NULL,
+ CONSTRAINT [PK_HangFire_CounterAggregated] PRIMARY KEY CLUSTERED 
+(
+	[Key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [HangFire].[Counter]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [HangFire].[Counter](
+	[Key] [nvarchar](100) NOT NULL,
+	[Value] [int] NOT NULL,
+	[ExpireAt] [datetime] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [HangFire].[Hash]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [HangFire].[Hash](
+	[Key] [nvarchar](100) NOT NULL,
+	[Field] [nvarchar](100) NOT NULL,
+	[Value] [nvarchar](max) NULL,
+	[ExpireAt] [datetime2](7) NULL,
+ CONSTRAINT [PK_HangFire_Hash] PRIMARY KEY CLUSTERED 
+(
+	[Key] ASC,
+	[Field] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [HangFire].[Job]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [HangFire].[Job](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[StateId] [bigint] NULL,
+	[StateName] [nvarchar](20) NULL,
+	[InvocationData] [nvarchar](max) NOT NULL,
+	[Arguments] [nvarchar](max) NOT NULL,
+	[CreatedAt] [datetime] NOT NULL,
+	[ExpireAt] [datetime] NULL,
+ CONSTRAINT [PK_HangFire_Job] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [HangFire].[JobParameter]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [HangFire].[JobParameter](
+	[JobId] [bigint] NOT NULL,
+	[Name] [nvarchar](40) NOT NULL,
+	[Value] [nvarchar](max) NULL,
+ CONSTRAINT [PK_HangFire_JobParameter] PRIMARY KEY CLUSTERED 
+(
+	[JobId] ASC,
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [HangFire].[JobQueue]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [HangFire].[JobQueue](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[JobId] [bigint] NOT NULL,
+	[Queue] [nvarchar](50) NOT NULL,
+	[FetchedAt] [datetime] NULL,
+ CONSTRAINT [PK_HangFire_JobQueue] PRIMARY KEY CLUSTERED 
+(
+	[Queue] ASC,
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [HangFire].[List]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [HangFire].[List](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[Key] [nvarchar](100) NOT NULL,
+	[Value] [nvarchar](max) NULL,
+	[ExpireAt] [datetime] NULL,
+ CONSTRAINT [PK_HangFire_List] PRIMARY KEY CLUSTERED 
+(
+	[Key] ASC,
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [HangFire].[Schema]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [HangFire].[Schema](
+	[Version] [int] NOT NULL,
+ CONSTRAINT [PK_HangFire_Schema] PRIMARY KEY CLUSTERED 
+(
+	[Version] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [HangFire].[Server]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [HangFire].[Server](
+	[Id] [nvarchar](200) NOT NULL,
+	[Data] [nvarchar](max) NULL,
+	[LastHeartbeat] [datetime] NOT NULL,
+ CONSTRAINT [PK_HangFire_Server] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [HangFire].[Set]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [HangFire].[Set](
+	[Key] [nvarchar](100) NOT NULL,
+	[Score] [float] NOT NULL,
+	[Value] [nvarchar](256) NOT NULL,
+	[ExpireAt] [datetime] NULL,
+ CONSTRAINT [PK_HangFire_Set] PRIMARY KEY CLUSTERED 
+(
+	[Key] ASC,
+	[Value] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [HangFire].[State]    Script Date: 24/06/2025 11:32:08 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [HangFire].[State](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[JobId] [bigint] NOT NULL,
+	[Name] [nvarchar](20) NOT NULL,
+	[Reason] [nvarchar](100) NULL,
+	[CreatedAt] [datetime] NOT NULL,
+	[Data] [nvarchar](max) NULL,
+ CONSTRAINT [PK_HangFire_State] PRIMARY KEY CLUSTERED 
+(
+	[JobId] ASC,
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[AspNetRoleClaims]  WITH CHECK ADD  CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[AspNetRoles] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetRoleClaims] CHECK CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId]
+GO
+ALTER TABLE [dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserClaims] CHECK CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[AspNetRoles] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId]
+GO
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserTokens]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserTokens] CHECK CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId]
+GO
+ALTER TABLE [HangFire].[JobParameter]  WITH CHECK ADD  CONSTRAINT [FK_HangFire_JobParameter_Job] FOREIGN KEY([JobId])
+REFERENCES [HangFire].[Job] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [HangFire].[JobParameter] CHECK CONSTRAINT [FK_HangFire_JobParameter_Job]
+GO
+ALTER TABLE [HangFire].[State]  WITH CHECK ADD  CONSTRAINT [FK_HangFire_State_Job] FOREIGN KEY([JobId])
+REFERENCES [HangFire].[Job] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [HangFire].[State] CHECK CONSTRAINT [FK_HangFire_State_Job]
+GO
